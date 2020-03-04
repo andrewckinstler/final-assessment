@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './UrlContainer.css';
 import { setUrls } from '../../actions';
-import { getUrls } from '../../apiCalls';
+import { getUrls, deleteUrl } from '../../apiCalls';
 import { connect } from 'react-redux';
 
 export class UrlContainer extends Component {
@@ -15,6 +15,12 @@ export class UrlContainer extends Component {
       .catch(err => console.error('Error fetching:', err));
   };
 
+  deleteCard = id => {
+    deleteUrl(id)
+    const urls = this.props.urls.filter(url => url.id !== id)
+    this.props.setUrls(urls)
+  }
+
   render() {
     const urlEls = this.props.urls.map(url => {
       return (
@@ -22,6 +28,7 @@ export class UrlContainer extends Component {
           <h3>{url.title}</h3>
           <a href={url.short_url} target="blank">{url.short_url}</a>
           <p>{url.long_url}</p>
+          <button onClick={() => this.deleteCard(url.id)}>delete</button>
         </div>
       )
     })

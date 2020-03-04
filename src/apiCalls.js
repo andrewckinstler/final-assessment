@@ -19,6 +19,16 @@ export const shortenUrl = urlObj => {
               if(!res.ok) {
                 throw Error('failed to shorten url')
               }
-              console.log(res)
               return res.json()})
+}
+
+export const deleteUrl = id => {
+  const options = {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  }
+    
+    return fetch(`http://localhost:3001/api/v1/urls/${id}`, options)
 }
